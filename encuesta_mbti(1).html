@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuestionario de personalidad — Actividad 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F3EE;
+    --card:#FFFFFF;
+    --ink:#232323;
+    --muted:#6B6A66;
+    --line:#E1DED5;
+    --accent:#2F5D53;
+    --accent-light:#E4EEEB;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    padding:2.5rem 1.25rem 5rem;
+  }
+  .wrap{max-width:640px;margin:0 auto;}
+  .eyebrow{
+    font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin:0 0 .5rem;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:600;font-size:30px;
+    margin:0 0 .4rem;line-height:1.2;
+  }
+  .sub{color:var(--muted);font-size:15px;margin:0 0 2rem;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:1.75rem 1.5rem;margin-bottom:1.25rem;
+  }
+  .q-label{font-size:16px;font-weight:500;margin:0 0 1.1rem;}
+  .scale{display:flex;justify-content:space-between;align-items:flex-end;gap:6px;}
+  .opt{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;
+    cursor:pointer;
+  }
+  .opt input{position:absolute;opacity:0;width:0;height:0;}
+  .dot{
+    width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:13px;
+    color:var(--muted);transition:.15s;background:#fff;
+  }
+  .opt input:checked + .dot{
+    background:var(--accent);border-color:var(--accent);color:#fff;
+  }
+  .end-labels{display:flex;justify-content:space-between;margin-top:.6rem;font-size:11.5px;color:var(--muted);}
+  select{
+    width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--line);
+    font-family:'Inter',sans-serif;font-size:15px;background:#fff;color:var(--ink);
+  }
+  button{
+    font-family:'Inter',sans-serif;font-weight:600;font-size:15px;
+    border-radius:10px;border:none;padding:14px 22px;cursor:pointer;
+    width:100%;transition:.15s;
+  }
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-primary:hover{background:#264c44;}
+  .btn-secondary{
+    background:transparent;color:var(--accent);border:1.5px solid var(--accent);
+    margin-top:.6rem;
+  }
+  .btn-secondary:hover{background:var(--accent-light);}
+  #result{display:none;}
+  .type-badge{
+    font-family:'Fraunces',serif;font-size:44px;font-weight:600;
+    color:var(--accent);text-align:center;margin:.3rem 0 1rem;letter-spacing:.03em;
+  }
+  .breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:1rem 0;}
+  .axis{background:var(--accent-light);border-radius:10px;padding:.7rem .9rem;}
+  .axis .name{font-size:12px;color:var(--muted);margin:0 0 2px;}
+  .axis .val{font-size:15px;font-weight:600;margin:0;}
+  .note{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:.9rem;margin-top:.9rem;}
+  .error{color:#a3352e;font-size:13.5px;margin:.5rem 0 0;display:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Actividad 1 — Análisis no supervisado</p>
+  <h1>Cuestionario de personalidad</h1>
+  <p class="sub">Responde con qué tan de acuerdo estás con cada frase. No hay respuestas correctas o incorrectas.</p>
+
+  <form id="form">
+    <div class="card">
+      <p class="q-label">1. Prefiero estar con otras personas que estar solo(a).</p>
+      <div class="scale" data-q="q1"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">2. Me fijo más en los detalles reales que en posibilidades o ideas.</p>
+      <div class="scale" data-q="q2"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">3. Cuando decido algo importante, pienso más en la lógica que en cómo se sienten los demás.</p>
+      <div class="scale" data-q="q3"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">4. Me gusta planear las cosas con tiempo, en vez de improvisar.</p>
+      <div class="scale" data-q="q4"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">5. ¿Cuál es tu rango de edad?</p>
+      <select id="edad">
+        <option value="">Selecciona una opción</option>
+        <option value="18-22">18–22</option>
+        <option value="23-27">23–27</option>
+        <option value="28-32">28–32</option>
+        <option value="33+">33 o más</option>
+      </select>
+    </div>
+
+    <p class="error" id="error">Por favor responde las 4 preguntas y selecciona tu rango de edad.</p>
+    <button type="submit" class="btn-primary">Ver resultado</button>
+  </form>
+
+  <div class="card" id="result">
+    <p class="eyebrow" style="text-align:center">Tu resultado</p>
+    <p class="type-badge" id="typeOut">----</p>
+    <div class="breakdown" id="breakdown"></div>
+    <p class="note">Este es un cálculo simplificado con fines académicos (una sola pregunta por dicotomía), no un diagnóstico psicológico oficial de MBTI.</p>
+    <p class="note" id="sendStatus" style="border-top:none;padding-top:0"></p>
+    <button class="btn-secondary" id="resetBtn">Responder de nuevo</button>
+  </div>
+
+</div>
+
+<script>
+// Pega aquí la URL de tu aplicación web de Google Apps Script (ver doPost.gs)
+const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwWxmgj4q4ZaLyBOLtSkZql0CDq0edlQk7QXwiZLKNG2zrnfYd7o_k1F3gLZKZD1T9GiQ/exec";
+
+const axes = [
+  {id:'q1', name:'Energía', left:'I', right:'E'},
+  {id:'q2', name:'Percepción', left:'N', right:'S'},
+  {id:'q3', name:'Decisión', left:'F', right:'T'},
+  {id:'q4', name:'Estilo de vida', left:'P', right:'J'}
+];
+
+document.querySelectorAll('.scale').forEach(el => {
+  const q = el.dataset.q;
+  let html = '';
+  for(let v=1; v<=5; v++){
+    html += `<label class="opt"><input type="radio" name="${q}" value="${v}"><span class="dot">${v}</span></label>`;
+  }
+  el.innerHTML = html;
+});
+
+let lastResponse = null;
+
+document.getElementById('form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const answers = {};
+  for(const ax of axes){
+    const checked = document.querySelector(`input[name="${ax.id}"]:checked`);
+    if(!checked){
+      document.getElementById('error').style.display = 'block';
+      return;
+    }
+    answers[ax.id] = parseInt(checked.value);
+  }
+  const edad = document.getElementById('edad').value;
+  if(!edad){
+    document.getElementById('error').style.display = 'block';
+    return;
+  }
+  document.getElementById('error').style.display = 'none';
+
+  let type = '';
+  let breakdownHtml = '';
+  const scores = {};
+  axes.forEach(ax => {
+    const score = answers[ax.id] - 3;
+    const letter = score > 0 ? ax.right : (score < 0 ? ax.left : ax.right);
+    type += letter;
+    scores[ax.id] = score;
+    breakdownHtml += `<div class="axis"><p class="name">${ax.name} (${ax.left}/${ax.right})</p><p class="val">${score > 0 ? '+' : ''}${score} → ${letter}</p></div>`;
+  });
+
+  document.getElementById('typeOut').textContent = type;
+  document.getElementById('breakdown').innerHTML = breakdownHtml;
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('form').style.display = 'none';
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+
+  lastResponse = {
+    timestamp: new Date().toISOString(),
+    q1_raw: answers.q1, q2_raw: answers.q2, q3_raw: answers.q3, q4_raw: answers.q4,
+    energia_score: scores.q1, percepcion_score: scores.q2, decision_score: scores.q3, estilo_score: scores.q4,
+    rango_edad: edad,
+    tipo_resultante: type
+  };
+
+  const statusEl = document.getElementById('sendStatus');
+  if(ENDPOINT_URL.indexOf('PEGA_AQUI') !== -1){
+    statusEl.textContent = 'Nota para el administrador: falta configurar ENDPOINT_URL en el HTML; esta respuesta no se guardó.';
+    return;
+  }
+  fetch(ENDPOINT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(lastResponse)
+  }).then(function(){
+    statusEl.textContent = 'Tu respuesta fue registrada. ¡Gracias por participar!';
+  }).catch(function(){
+    statusEl.textContent = 'Hubo un problema al registrar tu respuesta. Intenta de nuevo o avisa al administrador.';
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click', function(){
+  document.getElementById('form').reset();
+  document.getElementById('error').style.display = 'none';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('form').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+</script>
+</body>
+</html>
