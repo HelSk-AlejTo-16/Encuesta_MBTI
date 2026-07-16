@@ -18,11 +18,8 @@
   }
   *{box-sizing:border-box;}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    line-height:1.6;
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Inter',sans-serif;line-height:1.6;
     padding:2.5rem 1.25rem 5rem;
   }
   .wrap{max-width:640px;margin:0 auto;}
@@ -30,10 +27,7 @@
     font-size:12px;letter-spacing:.08em;text-transform:uppercase;
     color:var(--accent);font-weight:600;margin:0 0 .5rem;
   }
-  h1{
-    font-family:'Fraunces',serif;font-weight:600;font-size:30px;
-    margin:0 0 .4rem;line-height:1.2;
-  }
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:30px;margin:0 0 .4rem;line-height:1.2;}
   .sub{color:var(--muted);font-size:15px;margin:0 0 2rem;}
   .card{
     background:var(--card);border:1px solid var(--line);border-radius:14px;
@@ -41,51 +35,44 @@
   }
   .q-label{font-size:16px;font-weight:500;margin:0 0 1.1rem;}
   .scale{display:flex;justify-content:space-between;align-items:flex-end;gap:6px;}
-  .opt{
-    flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;
-    cursor:pointer;
-  }
+  .opt{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;}
   .opt input{position:absolute;opacity:0;width:0;height:0;}
   .dot{
     width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);
     display:flex;align-items:center;justify-content:center;font-size:13px;
     color:var(--muted);transition:.15s;background:#fff;
   }
-  .opt input:checked + .dot{
-    background:var(--accent);border-color:var(--accent);color:#fff;
-  }
+  .opt input:checked + .dot{background:var(--accent);border-color:var(--accent);color:#fff;}
   .end-labels{display:flex;justify-content:space-between;margin-top:.6rem;font-size:11.5px;color:var(--muted);}
-  select{
+  input[type=text], select{
     width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--line);
     font-family:'Inter',sans-serif;font-size:15px;background:#fff;color:var(--ink);
   }
+  label.field-label{display:block;font-size:13.5px;color:var(--muted);margin:0 0 .4rem;font-weight:500;}
+  .field{margin-bottom:1.1rem;}
+  .field:last-child{margin-bottom:0;}
   button{
     font-family:'Inter',sans-serif;font-weight:600;font-size:15px;
-    border-radius:10px;border:none;padding:14px 22px;cursor:pointer;
-    width:100%;transition:.15s;
+    border-radius:10px;border:none;padding:14px 22px;cursor:pointer;width:100%;transition:.15s;
   }
   .btn-primary{background:var(--accent);color:#fff;}
   .btn-primary:hover{background:#264c44;}
-  .btn-secondary{
-    background:transparent;color:var(--accent);border:1.5px solid var(--accent);
-    margin-top:.6rem;
-  }
+  .btn-secondary{background:transparent;color:var(--accent);border:1.5px solid var(--accent);margin-top:.6rem;}
   .btn-secondary:hover{background:var(--accent-light);}
   #result{display:none;}
   .type-badge{
     font-family:'Fraunces',serif;font-size:44px;font-weight:600;
     color:var(--accent);text-align:center;margin:.3rem 0 .3rem;letter-spacing:.03em;
   }
-  .type-desc{
-    text-align:center;font-size:14.5px;color:var(--muted);
-    max-width:440px;margin:0 auto 1rem;
-  }
+  .type-desc{text-align:center;font-size:14.5px;color:var(--muted);max-width:440px;margin:0 auto 1rem;}
   .breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:1rem 0;}
   .axis{background:var(--accent-light);border-radius:10px;padding:.7rem .9rem;}
   .axis .name{font-size:12px;color:var(--muted);margin:0 0 2px;}
   .axis .val{font-size:15px;font-weight:600;margin:0;}
   .note{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:.9rem;margin-top:.9rem;}
   .error{color:#a3352e;font-size:13.5px;margin:.5rem 0 0;display:none;}
+  .section-title{font-size:13px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin:2rem 0 .8rem;}
+  .section-title:first-of-type{margin-top:0;}
 </style>
 </head>
 <body>
@@ -96,6 +83,37 @@
   <p class="sub">Responde con qué tan de acuerdo estás con cada frase. No hay respuestas correctas o incorrectas.</p>
 
   <form id="form">
+
+    <p class="section-title">Datos generales</p>
+    <div class="card">
+      <div class="field">
+        <label class="field-label" for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" placeholder="Escribe tu nombre">
+      </div>
+      <div class="field">
+        <label class="field-label" for="genero">Género</label>
+        <select id="genero">
+          <option value="">Selecciona una opción</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Otro">Otro</option>
+          <option value="Prefiero no decir">Prefiero no decir</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label" for="edad">Rango de edad</label>
+        <select id="edad">
+          <option value="">Selecciona una opción</option>
+          <option value="18-22">18–22</option>
+          <option value="23-27">23–27</option>
+          <option value="28-32">28–32</option>
+          <option value="33+">33 o más</option>
+        </select>
+      </div>
+    </div>
+
+    <p class="section-title">Preguntas</p>
+
     <div class="card">
       <p class="q-label">1. Prefiero estar con otras personas que estar solo(a).</p>
       <div class="scale" data-q="q1"></div>
@@ -103,35 +121,60 @@
     </div>
 
     <div class="card">
-      <p class="q-label">2. Me fijo más en los detalles reales que en posibilidades o ideas.</p>
+      <p class="q-label">2. Después de socializar mucho tiempo, necesito estar a solas para recargar energía.</p>
       <div class="scale" data-q="q2"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
     <div class="card">
-      <p class="q-label">3. Cuando decido algo importante, pienso más en la lógica que en cómo se sienten los demás.</p>
+      <p class="q-label">3. Me resulta fácil iniciar conversaciones con personas que no conozco.</p>
       <div class="scale" data-q="q3"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
     <div class="card">
-      <p class="q-label">4. Me gusta planear las cosas con tiempo, en vez de improvisar.</p>
+      <p class="q-label">4. Me fijo más en los detalles reales que en posibilidades o ideas.</p>
       <div class="scale" data-q="q4"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
     <div class="card">
-      <p class="q-label">5. ¿Cuál es tu rango de edad?</p>
-      <select id="edad">
-        <option value="">Selecciona una opción</option>
-        <option value="18-22">18–22</option>
-        <option value="23-27">23–27</option>
-        <option value="28-32">28–32</option>
-        <option value="33+">33 o más</option>
-      </select>
+      <p class="q-label">5. Disfruto imaginar posibilidades futuras más que enfocarme en el presente.</p>
+      <div class="scale" data-q="q5"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
-    <p class="error" id="error">Por favor responde las 4 preguntas y selecciona tu rango de edad.</p>
+    <div class="card">
+      <p class="q-label">6. Prefiero instrucciones claras y paso a paso, en vez de ideas generales.</p>
+      <div class="scale" data-q="q6"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">7. Cuando decido algo importante, pienso más en la lógica que en cómo se sienten los demás.</p>
+      <div class="scale" data-q="q7"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">8. Me afecta bastante saber que mi decisión puede incomodar a alguien.</p>
+      <div class="scale" data-q="q8"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">9. Me gusta planear las cosas con tiempo, en vez de improvisar.</p>
+      <div class="scale" data-q="q9"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">10. Prefiero mantener mis opciones abiertas en vez de comprometerme a un plan fijo.</p>
+      <div class="scale" data-q="q10"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <p class="error" id="error">Por favor completa tu nombre, género, edad, y responde las 10 preguntas.</p>
     <button type="submit" class="btn-primary">Ver resultado</button>
   </form>
 
@@ -140,7 +183,7 @@
     <p class="type-badge" id="typeOut">----</p>
     <p class="type-desc" id="typeDesc"></p>
     <div class="breakdown" id="breakdown"></div>
-    <p class="note">Este es un cálculo simplificado con fines académicos (una sola pregunta por dicotomía), no un diagnóstico psicológico oficial de MBTI.</p>
+    <p class="note">Este es un cálculo simplificado con fines académicos, no un diagnóstico psicológico oficial de MBTI.</p>
     <p class="note" id="sendStatus" style="border-top:none;padding-top:0"></p>
     <button class="btn-secondary" id="resetBtn">Responder de nuevo</button>
   </div>
@@ -149,7 +192,7 @@
 
 <script>
 // Pega aquí la URL de tu aplicación web de Google Apps Script (ver doPost.gs)
-const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwWxmgj4q4ZaLyBOLtSkZql0CDq0edlQk7QXwiZLKNG2zrnfYd7o_k1F3gLZKZD1T9GiQ/exec";
+const ENDPOINT_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
 
 const TYPE_DESCRIPTIONS = {
   ISTJ: "Práctico y responsable; valora el orden, la puntualidad y el cumplimiento de las normas.",
@@ -170,12 +213,28 @@ const TYPE_DESCRIPTIONS = {
   ENTJ: "Líder decidido; organiza personas y recursos para alcanzar objetivos ambiciosos."
 };
 
-const axes = [
-  {id:'q1', name:'Energía', left:'I', right:'E'},
-  {id:'q2', name:'Percepción', left:'N', right:'S'},
-  {id:'q3', name:'Decisión', left:'F', right:'T'},
-  {id:'q4', name:'Estilo de vida', left:'P', right:'J'}
+// Cada pregunta pertenece a una dicotomía y tiene una polaridad:
+// polarity = 1  -> estar de acuerdo se inclina hacia la letra "right"
+// polarity = -1 -> estar de acuerdo se inclina hacia la letra "left" (pregunta en sentido inverso)
+const QUESTIONS = [
+  {id:'q1',  axis:'ei', polarity: 1},
+  {id:'q2',  axis:'ei', polarity:-1},
+  {id:'q3',  axis:'ei', polarity: 1},
+  {id:'q4',  axis:'sn', polarity: 1},
+  {id:'q5',  axis:'sn', polarity:-1},
+  {id:'q6',  axis:'sn', polarity: 1},
+  {id:'q7',  axis:'tf', polarity: 1},
+  {id:'q8',  axis:'tf', polarity:-1},
+  {id:'q9',  axis:'jp', polarity: 1},
+  {id:'q10', axis:'jp', polarity:-1}
 ];
+
+const AXES = {
+  ei: {name:'Energía',       left:'I', right:'E'},
+  sn: {name:'Percepción',    left:'N', right:'S'},
+  tf: {name:'Decisión',      left:'F', right:'T'},
+  jp: {name:'Estilo de vida',left:'P', right:'J'}
+};
 
 document.querySelectorAll('.scale').forEach(el => {
   const q = el.dataset.q;
@@ -190,31 +249,39 @@ let lastResponse = null;
 
 document.getElementById('form').addEventListener('submit', function(e){
   e.preventDefault();
+
+  const nombre = document.getElementById('nombre').value.trim();
+  const genero = document.getElementById('genero').value;
+  const edad = document.getElementById('edad').value;
+
   const answers = {};
-  for(const ax of axes){
-    const checked = document.querySelector(`input[name="${ax.id}"]:checked`);
+  for(const q of QUESTIONS){
+    const checked = document.querySelector(`input[name="${q.id}"]:checked`);
     if(!checked){
       document.getElementById('error').style.display = 'block';
       return;
     }
-    answers[ax.id] = parseInt(checked.value);
+    answers[q.id] = parseInt(checked.value);
   }
-  const edad = document.getElementById('edad').value;
-  if(!edad){
+  if(!nombre || !genero || !edad){
     document.getElementById('error').style.display = 'block';
     return;
   }
   document.getElementById('error').style.display = 'none';
 
+  const totals = {ei:0, sn:0, tf:0, jp:0};
+  QUESTIONS.forEach(q => {
+    totals[q.axis] += q.polarity * (answers[q.id] - 3);
+  });
+
   let type = '';
   let breakdownHtml = '';
-  const scores = {};
-  axes.forEach(ax => {
-    const score = answers[ax.id] - 3;
-    const letter = score > 0 ? ax.right : (score < 0 ? ax.left : ax.right);
+  Object.keys(AXES).forEach(key => {
+    const ax = AXES[key];
+    const total = totals[key];
+    const letter = total > 0 ? ax.right : (total < 0 ? ax.left : ax.right);
     type += letter;
-    scores[ax.id] = score;
-    breakdownHtml += `<div class="axis"><p class="name">${ax.name} (${ax.left}/${ax.right})</p><p class="val">${score > 0 ? '+' : ''}${score} → ${letter}</p></div>`;
+    breakdownHtml += `<div class="axis"><p class="name">${ax.name} (${ax.left}/${ax.right})</p><p class="val">${total > 0 ? '+' : ''}${total} → ${letter}</p></div>`;
   });
 
   document.getElementById('typeOut').textContent = type;
@@ -226,9 +293,12 @@ document.getElementById('form').addEventListener('submit', function(e){
 
   lastResponse = {
     timestamp: new Date().toISOString(),
-    q1_raw: answers.q1, q2_raw: answers.q2, q3_raw: answers.q3, q4_raw: answers.q4,
-    energia_score: scores.q1, percepcion_score: scores.q2, decision_score: scores.q3, estilo_score: scores.q4,
+    nombre: nombre,
+    genero: genero,
     rango_edad: edad,
+    q1_raw: answers.q1, q2_raw: answers.q2, q3_raw: answers.q3, q4_raw: answers.q4, q5_raw: answers.q5,
+    q6_raw: answers.q6, q7_raw: answers.q7, q8_raw: answers.q8, q9_raw: answers.q9, q10_raw: answers.q10,
+    energia_score: totals.ei, percepcion_score: totals.sn, decision_score: totals.tf, estilo_score: totals.jp,
     tipo_resultante: type
   };
 
