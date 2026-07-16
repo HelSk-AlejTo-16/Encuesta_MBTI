@@ -73,6 +73,10 @@
   .error{color:#a3352e;font-size:13.5px;margin:.5rem 0 0;display:none;}
   .section-title{font-size:13px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin:2rem 0 .8rem;}
   .section-title:first-of-type{margin-top:0;}
+  .progress-wrap{position:sticky;top:0;background:var(--bg);padding:.6rem 0 1rem;z-index:5;}
+  .progress-track{height:6px;background:var(--line);border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--accent);width:0%;transition:width .2s;}
+  .progress-text{font-size:11.5px;color:var(--muted);margin:.4rem 0 0;text-align:right;}
 </style>
 </head>
 <body>
@@ -81,6 +85,11 @@
   <p class="eyebrow">Actividad 1 — Análisis no supervisado</p>
   <h1>Cuestionario de personalidad</h1>
   <p class="sub">Responde con qué tan de acuerdo estás con cada frase. No hay respuestas correctas o incorrectas.</p>
+
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <p class="progress-text" id="progressText">0 de 24 preguntas respondidas</p>
+  </div>
 
   <form id="form">
 
@@ -112,7 +121,7 @@
       </div>
     </div>
 
-    <p class="section-title">Preguntas</p>
+    <p class="section-title">Energía (E / I)</p>
 
     <div class="card">
       <p class="q-label">1. Prefiero estar con otras personas que estar solo(a).</p>
@@ -133,48 +142,138 @@
     </div>
 
     <div class="card">
-      <p class="q-label">4. Me fijo más en los detalles reales que en posibilidades o ideas.</p>
+      <p class="q-label">4. Suelo sentirme agotado(a) después de asistir a eventos con mucha gente.</p>
       <div class="scale" data-q="q4"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
     <div class="card">
-      <p class="q-label">5. Disfruto imaginar posibilidades futuras más que enfocarme en el presente.</p>
+      <p class="q-label">5. Disfruto ser el centro de atención en una reunión social.</p>
       <div class="scale" data-q="q5"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
     <div class="card">
-      <p class="q-label">6. Prefiero instrucciones claras y paso a paso, en vez de ideas generales.</p>
+      <p class="q-label">6. Prefiero pasar mi tiempo libre con una o dos personas cercanas que en grupos grandes.</p>
       <div class="scale" data-q="q6"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
+    <p class="section-title">Percepción (S / N)</p>
+
     <div class="card">
-      <p class="q-label">7. Cuando decido algo importante, pienso más en la lógica que en cómo se sienten los demás.</p>
+      <p class="q-label">7. Me fijo más en los detalles reales que en posibilidades o ideas.</p>
       <div class="scale" data-q="q7"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
     <div class="card">
-      <p class="q-label">8. Me afecta bastante saber que mi decisión puede incomodar a alguien.</p>
+      <p class="q-label">8. Disfruto imaginar posibilidades futuras más que enfocarme en el presente.</p>
       <div class="scale" data-q="q8"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
     <div class="card">
-      <p class="q-label">9. Me gusta planear las cosas con tiempo, en vez de improvisar.</p>
+      <p class="q-label">9. Prefiero instrucciones claras y paso a paso, en vez de ideas generales.</p>
       <div class="scale" data-q="q9"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
     <div class="card">
-      <p class="q-label">10. Prefiero mantener mis opciones abiertas en vez de comprometerme a un plan fijo.</p>
+      <p class="q-label">10. Me interesa más el significado oculto de las cosas que los hechos concretos.</p>
       <div class="scale" data-q="q10"></div>
       <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
     </div>
 
-    <p class="error" id="error">Por favor completa tu nombre, género, edad, y responde las 10 preguntas.</p>
+    <div class="card">
+      <p class="q-label">11. Confío más en mi experiencia práctica que en mi intuición.</p>
+      <div class="scale" data-q="q11"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">12. Me gusta explorar teorías o conceptos abstractos, aunque no tengan aplicación inmediata.</p>
+      <div class="scale" data-q="q12"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <p class="section-title">Decisión (T / F)</p>
+
+    <div class="card">
+      <p class="q-label">13. Cuando decido algo importante, pienso más en la lógica que en cómo se sienten los demás.</p>
+      <div class="scale" data-q="q13"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">14. Me afecta bastante saber que mi decisión puede incomodar a alguien.</p>
+      <div class="scale" data-q="q14"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">15. Prefiero dar retroalimentación honesta y directa, aunque sea incómoda.</p>
+      <div class="scale" data-q="q15"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">16. Antes de dar mi opinión, pienso en cómo se sentirán los demás al escucharla.</p>
+      <div class="scale" data-q="q16"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">17. Tomo decisiones con base en criterios objetivos, más que en valores personales.</p>
+      <div class="scale" data-q="q17"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">18. Me cuesta ser imparcial cuando una decisión afecta a alguien que quiero.</p>
+      <div class="scale" data-q="q18"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <p class="section-title">Estilo de vida (J / P)</p>
+
+    <div class="card">
+      <p class="q-label">19. Me gusta planear las cosas con tiempo, en vez de improvisar.</p>
+      <div class="scale" data-q="q19"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">20. Prefiero mantener mis opciones abiertas en vez de comprometerme a un plan fijo.</p>
+      <div class="scale" data-q="q20"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">21. Me siento incómodo(a) cuando cambian los planes a último momento.</p>
+      <div class="scale" data-q="q21"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">22. Disfruto trabajar bajo presión, cerca de la fecha límite.</p>
+      <div class="scale" data-q="q22"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">23. Me gusta terminar una tarea por completo antes de empezar otra.</p>
+      <div class="scale" data-q="q23"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <div class="card">
+      <p class="q-label">24. Suelo dejar las decisiones importantes para el último momento.</p>
+      <div class="scale" data-q="q24"></div>
+      <div class="end-labels"><span>Totalmente en desacuerdo</span><span>Totalmente de acuerdo</span></div>
+    </div>
+
+    <p class="error" id="error">Por favor completa tu nombre, género, edad, y responde las 24 preguntas.</p>
     <button type="submit" class="btn-primary">Ver resultado</button>
   </form>
 
@@ -193,7 +292,7 @@
 
 <script>
 // Pega aquí la URL de tu aplicación web de Google Apps Script (ver doPost.gs)
-const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbxDvnNEIVQ3kGH2ZTLQj3QCeQhojzgeUx_QPZqu5P0LHTvrATp-AQmxtRPVNcyuxg4w9Q/exec";
+const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwOMtAEM6AW1OFe1CT3-Z60cHOpJ26UQL7weZ0MZqKuenZA1yHAhLgG24u743Qo8a770Q/exec";
 
 const TYPE_DESCRIPTIONS = {
   ISTJ: "Práctico y responsable; valora el orden, la puntualidad y el cumplimiento de las normas.",
@@ -213,7 +312,7 @@ const TYPE_DESCRIPTIONS = {
   ENFJ: "Carismático y motivador; disfruta ayudar a otros a crecer y alcanzar metas.",
   ENTJ: "Líder decidido; organiza personas y recursos para alcanzar objetivos ambiciosos."
 };
-  const TYPE_NAMES = {
+const TYPE_NAMES = {
   ISTJ: "El Logista",
   ISFJ: "El Defensor",
   INFJ: "El Abogado",
@@ -236,16 +335,34 @@ const TYPE_DESCRIPTIONS = {
 // polarity = 1  -> estar de acuerdo se inclina hacia la letra "right"
 // polarity = -1 -> estar de acuerdo se inclina hacia la letra "left" (pregunta en sentido inverso)
 const QUESTIONS = [
+  // Energía (E/I) — 6 ítems
   {id:'q1',  axis:'ei', polarity: 1},
   {id:'q2',  axis:'ei', polarity:-1},
   {id:'q3',  axis:'ei', polarity: 1},
-  {id:'q4',  axis:'sn', polarity: 1},
-  {id:'q5',  axis:'sn', polarity:-1},
-  {id:'q6',  axis:'sn', polarity: 1},
-  {id:'q7',  axis:'tf', polarity: 1},
-  {id:'q8',  axis:'tf', polarity:-1},
-  {id:'q9',  axis:'jp', polarity: 1},
-  {id:'q10', axis:'jp', polarity:-1}
+  {id:'q4',  axis:'ei', polarity:-1},
+  {id:'q5',  axis:'ei', polarity: 1},
+  {id:'q6',  axis:'ei', polarity:-1},
+  // Percepción (S/N) — 6 ítems
+  {id:'q7',  axis:'sn', polarity: 1},
+  {id:'q8',  axis:'sn', polarity:-1},
+  {id:'q9',  axis:'sn', polarity: 1},
+  {id:'q10', axis:'sn', polarity:-1},
+  {id:'q11', axis:'sn', polarity: 1},
+  {id:'q12', axis:'sn', polarity:-1},
+  // Decisión (T/F) — 6 ítems
+  {id:'q13', axis:'tf', polarity: 1},
+  {id:'q14', axis:'tf', polarity:-1},
+  {id:'q15', axis:'tf', polarity: 1},
+  {id:'q16', axis:'tf', polarity:-1},
+  {id:'q17', axis:'tf', polarity: 1},
+  {id:'q18', axis:'tf', polarity:-1},
+  // Estilo de vida (J/P) — 6 ítems
+  {id:'q19', axis:'jp', polarity: 1},
+  {id:'q20', axis:'jp', polarity:-1},
+  {id:'q21', axis:'jp', polarity: 1},
+  {id:'q22', axis:'jp', polarity:-1},
+  {id:'q23', axis:'jp', polarity: 1},
+  {id:'q24', axis:'jp', polarity:-1}
 ];
 
 const AXES = {
@@ -263,6 +380,19 @@ document.querySelectorAll('.scale').forEach(el => {
   }
   el.innerHTML = html;
 });
+
+// Barra de progreso: cuenta cuántas de las 24 preguntas ya tienen respuesta
+function updateProgress(){
+  let answered = 0;
+  QUESTIONS.forEach(q => {
+    if(document.querySelector(`input[name="${q.id}"]:checked`)) answered++;
+  });
+  const pct = Math.round((answered / QUESTIONS.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${answered} de ${QUESTIONS.length} preguntas respondidas`;
+}
+document.getElementById('form').addEventListener('change', updateProgress);
+updateProgress();
 
 let lastResponse = null;
 
@@ -309,18 +439,21 @@ document.getElementById('form').addEventListener('submit', function(e){
   document.getElementById('breakdown').innerHTML = breakdownHtml;
   document.getElementById('result').style.display = 'block';
   document.getElementById('form').style.display = 'none';
+  document.querySelector('.progress-wrap').style.display = 'none';
   document.getElementById('result').scrollIntoView({behavior:'smooth'});
 
   lastResponse = {
     timestamp: new Date().toISOString(),
     nombre: nombre,
     genero: genero,
-    rango_edad: edad,
-    q1_raw: answers.q1, q2_raw: answers.q2, q3_raw: answers.q3, q4_raw: answers.q4, q5_raw: answers.q5,
-    q6_raw: answers.q6, q7_raw: answers.q7, q8_raw: answers.q8, q9_raw: answers.q9, q10_raw: answers.q10,
-    energia_score: totals.ei, percepcion_score: totals.sn, decision_score: totals.tf, estilo_score: totals.jp,
-    tipo_resultante: type
+    rango_edad: edad
   };
+  QUESTIONS.forEach(q => { lastResponse[q.id + '_raw'] = answers[q.id]; });
+  lastResponse.energia_score = totals.ei;
+  lastResponse.percepcion_score = totals.sn;
+  lastResponse.decision_score = totals.tf;
+  lastResponse.estilo_score = totals.jp;
+  lastResponse.tipo_resultante = type;
 
   const statusEl = document.getElementById('sendStatus');
   if(ENDPOINT_URL.indexOf('PEGA_AQUI') !== -1){
@@ -344,6 +477,8 @@ document.getElementById('resetBtn').addEventListener('click', function(){
   document.getElementById('error').style.display = 'none';
   document.getElementById('result').style.display = 'none';
   document.getElementById('form').style.display = 'block';
+  document.querySelector('.progress-wrap').style.display = 'block';
+  updateProgress();
   window.scrollTo({top:0, behavior:'smooth'});
 });
 </script>
