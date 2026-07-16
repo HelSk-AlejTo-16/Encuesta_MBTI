@@ -74,7 +74,11 @@
   #result{display:none;}
   .type-badge{
     font-family:'Fraunces',serif;font-size:44px;font-weight:600;
-    color:var(--accent);text-align:center;margin:.3rem 0 1rem;letter-spacing:.03em;
+    color:var(--accent);text-align:center;margin:.3rem 0 .3rem;letter-spacing:.03em;
+  }
+  .type-desc{
+    text-align:center;font-size:14.5px;color:var(--muted);
+    max-width:440px;margin:0 auto 1rem;
   }
   .breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:1rem 0;}
   .axis{background:var(--accent-light);border-radius:10px;padding:.7rem .9rem;}
@@ -134,6 +138,7 @@
   <div class="card" id="result">
     <p class="eyebrow" style="text-align:center">Tu resultado</p>
     <p class="type-badge" id="typeOut">----</p>
+    <p class="type-desc" id="typeDesc"></p>
     <div class="breakdown" id="breakdown"></div>
     <p class="note">Este es un cálculo simplificado con fines académicos (una sola pregunta por dicotomía), no un diagnóstico psicológico oficial de MBTI.</p>
     <p class="note" id="sendStatus" style="border-top:none;padding-top:0"></p>
@@ -145,6 +150,25 @@
 <script>
 // Pega aquí la URL de tu aplicación web de Google Apps Script (ver doPost.gs)
 const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwWxmgj4q4ZaLyBOLtSkZql0CDq0edlQk7QXwiZLKNG2zrnfYd7o_k1F3gLZKZD1T9GiQ/exec";
+
+const TYPE_DESCRIPTIONS = {
+  ISTJ: "Práctico y responsable; valora el orden, la puntualidad y el cumplimiento de las normas.",
+  ISFJ: "Cuidadoso y leal; se preocupa por el bienestar de los demás y prefiere la estabilidad.",
+  INFJ: "Idealista y reservado; busca sentido y profundidad en sus relaciones y proyectos.",
+  INTJ: "Estratega independiente; disfruta planear a largo plazo y resolver problemas complejos.",
+  ISTP: "Observador y práctico; le gusta entender cómo funcionan las cosas y actuar con eficacia.",
+  ISFP: "Sensible y flexible; valora la armonía y expresa sus ideas de forma tranquila.",
+  INFP: "Idealista y empático; se guía por sus valores personales y busca autenticidad.",
+  INTP: "Analítico y curioso; disfruta explorar ideas y teorías desde la lógica.",
+  ESTP: "Enérgico y directo; disfruta la acción inmediata y resolver problemas sobre la marcha.",
+  ESFP: "Sociable y espontáneo; vive el presente y disfruta motivar a los demás.",
+  ENFP: "Entusiasta y creativo; conecta ideas y personas con facilidad.",
+  ENTP: "Innovador y debatiente; disfruta explorar posibilidades y cuestionar lo establecido.",
+  ESTJ: "Organizado y decidido; le gusta liderar con reglas claras y enfocarse en resultados.",
+  ESFJ: "Cálido y colaborador; se preocupa por mantener la armonía del grupo.",
+  ENFJ: "Carismático y motivador; disfruta ayudar a otros a crecer y alcanzar metas.",
+  ENTJ: "Líder decidido; organiza personas y recursos para alcanzar objetivos ambiciosos."
+};
 
 const axes = [
   {id:'q1', name:'Energía', left:'I', right:'E'},
@@ -194,6 +218,7 @@ document.getElementById('form').addEventListener('submit', function(e){
   });
 
   document.getElementById('typeOut').textContent = type;
+  document.getElementById('typeDesc').textContent = TYPE_DESCRIPTIONS[type] || '';
   document.getElementById('breakdown').innerHTML = breakdownHtml;
   document.getElementById('result').style.display = 'block';
   document.getElementById('form').style.display = 'none';
