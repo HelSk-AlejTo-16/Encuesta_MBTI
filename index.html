@@ -181,6 +181,7 @@
   <div class="card" id="result">
     <p class="eyebrow" style="text-align:center">Tu resultado</p>
     <p class="type-badge" id="typeOut">----</p>
+    <p id="typeName" style="text-align:center; font-size: 20px; font-weight: 600; color: var(--ink); margin: -10px 0 15px;"></p>
     <p class="type-desc" id="typeDesc"></p>
     <div class="breakdown" id="breakdown"></div>
     <p class="note">Este es un cálculo simplificado con fines académicos, no un diagnóstico psicológico oficial de MBTI.</p>
@@ -211,6 +212,24 @@ const TYPE_DESCRIPTIONS = {
   ESFJ: "Cálido y colaborador; se preocupa por mantener la armonía del grupo.",
   ENFJ: "Carismático y motivador; disfruta ayudar a otros a crecer y alcanzar metas.",
   ENTJ: "Líder decidido; organiza personas y recursos para alcanzar objetivos ambiciosos."
+};
+  const TYPE_NAMES = {
+  ISTJ: "El Logista",
+  ISFJ: "El Defensor",
+  INFJ: "El Abogado",
+  INTJ: "El Arquitecto",
+  ISTP: "El Virtuoso",
+  ISFP: "El Aventurero",
+  INFP: "El Mediador",
+  INTP: "El Lógico",
+  ESTP: "El Emprendedor",
+  ESFP: "El Animador",
+  ENFP: "El Activista",
+  ENTP: "El Innovador",
+  ESTJ: "El Ejecutivo",
+  ESFJ: "El Cónsul",
+  ENFJ: "El Protagonista",
+  ENTJ: "El Comandante"
 };
 
 // Cada pregunta pertenece a una dicotomía y tiene una polaridad:
@@ -285,6 +304,7 @@ document.getElementById('form').addEventListener('submit', function(e){
   });
 
   document.getElementById('typeOut').textContent = type;
+  document.getElementById('typeName').textContent = TYPE_NAMES[type] || '';
   document.getElementById('typeDesc').textContent = TYPE_DESCRIPTIONS[type] || '';
   document.getElementById('breakdown').innerHTML = breakdownHtml;
   document.getElementById('result').style.display = 'block';
